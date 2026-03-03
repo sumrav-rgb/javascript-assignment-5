@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+</head>
+<body>
+
+  <h1>To-Do List</h1>
+
+  <input id="newItem" type="text" placeholder="Enter task" />
+  <button onclick="addItem()">Add</button>
+  <button onclick="clearList()">Clear</button>
+  <button onclick="sortList()">Sort A-Z</button>
+
+  <ul id="myList"></ul>
+
+  <input id="deleteItem" type="text" placeholder="Enter task to delete" />
+  <button onclick="deleteItem()">Delete Item</button>
+
+  <script>
+    function addItem() {
+      var text = document.getElementById("newItem").value;
+      if (text == "") { alert("Type a task!"); return; }
+      var li = document.createElement("li");
+      li.textContent = text;
+      document.getElementById("myList").appendChild(li);
+      document.getElementById("newItem").value = "";
+    }
+
+    function clearList() {
+      document.getElementById("myList").innerHTML = "";
+    }
+
+    function sortList() {
+      var list = document.getElementById("myList");
+      var items = Array.from(list.getElementsByTagName("li"));
+      items.sort((a, b) => a.textContent.localeCompare(b.textContent));
+      items.forEach(item => list.appendChild(item));
+    }
+
+    function deleteItem() {
+      var text = document.getElementById("deleteItem").value.toLowerCase();
+      if (text == "") { alert("Type a task to delete!"); return; }
+      var items = document.getElementById("myList").getElementsByTagName("li");
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].textContent.toLowerCase() == text) {
+          items[i].remove();
+          document.getElementById("deleteItem").value = "";
+          return;
+        }
+      }
+      alert("Task not found!");
+    }
+  </script>
+
+</body>
+</html>
